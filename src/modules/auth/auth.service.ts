@@ -5,7 +5,7 @@ import { BadRequestException, Injectable, Req, Res } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { Request, Response } from 'express';
 import { CurrentUser } from './decorators/user.decorator';
-import { SignupDto } from './dto/register.dto';
+import { RegisterDto } from './dto/register.dto';
 import { ConfigService } from '@nestjs/config';
 import UpdateProfileDto from './dto/update-profile.dto';
 import { EmailService } from 'src/modules/email/email.service';
@@ -51,7 +51,7 @@ export class AuthService {
     return await this.usersService.updateProfile(currentUser, dto);
   }
 
-  async register(registerDto: SignupDto): Promise<{ data: User }> {
+  async register(registerDto: RegisterDto): Promise<{ data: User }> {
     const { data } = await this.usersService.register(registerDto);
     return { data };
   }

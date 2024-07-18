@@ -1,7 +1,7 @@
 import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
 import { Match } from '../decorators/match.decorator';
 
-export class SignupDto {
+export class RegisterDto {
   @MinLength(3, { message: 'Le prénom doit contenir au-moins 3 caractères' })
   first_name: string;
 
@@ -27,4 +27,7 @@ export class SignupDto {
 
   @IsNotEmpty({ message: "L'adresse est obligatoire" })
   address: string;
+
+  @IsNotEmpty({ message: 'Le département est obligatoire' })
+  departments: number[];
 }

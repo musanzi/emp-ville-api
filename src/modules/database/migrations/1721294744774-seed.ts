@@ -1,9 +1,18 @@
+import { Department } from 'src/modules/departments/entities/department.entity';
 import { Role } from 'src/modules/roles/entities/role.entity';
 import { User } from 'src/modules/users/entities/user.entity';
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Seed1721223772112 implements MigrationInterface {
+export class Seed1721294744774 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.manager.save(
+      queryRunner.manager.getRepository(Department).create([
+        { name: 'IT', description: 'Information Technology', created_at: new Date(), updated_at: new Date() },
+        { name: 'HR', description: 'Human Resources', created_at: new Date(), updated_at: new Date() },
+        { name: 'Finance', description: 'Finance Department', created_at: new Date(), updated_at: new Date() }
+      ])
+    );
+
     await queryRunner.manager.save(
       queryRunner.manager.getRepository(Role).create([
         { name: 'admin', created_at: new Date(), updated_at: new Date() },
@@ -24,7 +33,8 @@ export class Seed1721223772112 implements MigrationInterface {
           phone_number: '+243079265726',
           address: '11, avenue des huileries, Kinshasa, Gombe',
           verified_at: new Date(),
-          roles: [{ id: 1 }]
+          roles: [{ id: 1 }],
+          departments: [{ id: 1 }, { id: 2 }]
         }
       ])
     );

@@ -1,7 +1,7 @@
 import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import * as fs from 'fs-extra';
 import { promisify } from 'util';
-import { SignupDto } from '../auth/dto/register.dto';
+import { RegisterDto } from '../auth/dto/register.dto';
 import CreateUserDto from './dto/create-user.dto';
 import { CreateWithGoogleDto } from './dto/create-with-google.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -45,11 +45,12 @@ export class UsersService {
     }
   }
 
-  async register(dto: SignupDto): Promise<{ data: User }> {
+  async register(dto: RegisterDto): Promise<{ data: User }> {
     try {
       delete dto.password_confirm;
       const data: User = await this.userRepository.save({
         ...dto,
+        departments: dto.departments.map((id) => ({ id })),
         roles: [{ name: RoleEnum.User }]
       });
       return { data };
@@ -77,7 +78,7 @@ export class UsersService {
     try {
       const data: User = await this.userRepository.findOneOrFail({
         where: { id },
-        relations: ['roles']
+        relations: ['roles', 'departments']
       });
       return { data };
     } catch {
@@ -119,7 +120,7 @@ export class UsersService {
       const data: User = await this.userRepository.save({
         ...user,
         ...dto,
-        roles: dto?.roles?.map((id) => ({ id })) || user.roles.map((role) => ({ id: role.id }))
+        roles: dto?.roles.map((id) => ({ id })) || user.roles.map((role) => ({ id: role.id }))
       });
       return { data };
     } catch {

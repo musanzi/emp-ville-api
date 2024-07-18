@@ -5,7 +5,7 @@ import { Request } from 'express';
 import { Public } from './decorators/public.decorator';
 import { CurrentUser } from './decorators/user.decorator';
 import { GoogleGuard } from './guards/google.guard';
-import { SignupDto } from './dto/register.dto';
+import { RegisterDto } from './dto/register.dto';
 import UpdateProfileDto from './dto/update-profile.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 import { ResetPasswordRequestDto } from './dto/reset-password-request.dto';
@@ -45,7 +45,7 @@ export class AuthController {
 
   @Public()
   @Post('register')
-  register(@Body() data: SignupDto): Promise<{ data: User }> {
+  register(@Body() data: RegisterDto): Promise<{ data: User }> {
     return this.authService.register(data);
   }
 

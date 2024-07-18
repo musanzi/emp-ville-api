@@ -1,3 +1,4 @@
+import { Department } from 'src/modules/departments/entities/department.entity';
 import { Role } from '../../roles/entities/role.entity';
 import {
   Column,
@@ -56,4 +57,8 @@ export class User {
   @ManyToMany(() => Role, (role) => role.users)
   @JoinTable({ name: 'user_roles' })
   roles: Role[];
+
+  @ManyToMany(() => Department, (department) => department.users)
+  @JoinTable({ name: 'user_departments' })
+  departments: Role[];
 }
